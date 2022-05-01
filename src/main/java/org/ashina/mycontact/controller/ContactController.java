@@ -2,6 +2,8 @@ package org.ashina.mycontact.controller;
 
 import org.ashina.mycontact.entity.Contact;
 import org.ashina.mycontact.service.ContactService;
+import org.ashina.mycontact.service.LabelsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class ContactController {
 
     @Autowired
     private ContactService contactService;
+    
+    @Autowired
+    private LabelsService labelsService;
 
     @GetMapping("/contact")
     public String list(Model model) {
@@ -64,6 +69,12 @@ public class ContactController {
         contactService.delete(id);
         redirect.addFlashAttribute("successMessage", "Deleted contact successfully!");
         return "redirect:/contact";
+    }
+    
+    @GetMapping("/labels")
+    public String getlabels(Model model) {
+    	model.addAttribute("labels",labelsService.findAll());
+    	return "labels";
     }
 
 }
